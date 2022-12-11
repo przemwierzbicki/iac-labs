@@ -16,10 +16,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    
-    defaults:
-      run:
-        working-directory: ./example-app
 
     steps:
     - uses: actions/checkout@v3
@@ -36,10 +32,13 @@ jobs:
         create-virtualenv: false
     - name: Install dependencies
       run: |
+        cd ./example-app
         poetry install
     - name: Lint with flake8
       run: |
+        cd ./example-app
         poetry run task lint
     - name: Test with pytest
       run: |
+        cd ./example-app
         poetry run task test
