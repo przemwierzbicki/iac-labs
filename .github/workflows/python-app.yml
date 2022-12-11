@@ -31,25 +31,28 @@ jobs:
       # You may pin to the exact commit or the version.
       # uses: snok/install-poetry@d45b6d76012debf457ab49dffc7fb7b2efe8071d
       uses: snok/install-poetry@v1.3.3
-#      with:
-        # The Poetry version to install
-#        version: # default is latest
-        # Whether Poetry should create a virtualenv or not
-#        virtualenvs-create: # optional, default is true
-        # Whether Poetry should create virtualenvs in the project directory or not
-#        virtualenvs-in-project: # optional, default is false
-        # The Poetry virtualenv path
-#        virtualenvs-path: # optional, default is {cache-dir}/virtualenvs
-        # Whether to install many packages at once or one by one. This can fix PyPI DNS resolution errors, but also slows down the installation
-#        installer-parallel: # optional, default is true
-        # Arguments passed directly to the Poetry installation script. For example --force.
-#        installation-arguments: # optional
     - name: Install dependencies
       run: |
-        poetry install --quiet
+        poetry install
+
+  lint:
+    needs: build
+    if: ${{ always() }}
+    defaults:
+      run:
+        working-directory: ./example-app
+    steps:
     - name: Lint
       run: |
         poetry run task lint
+
+  test:
+    needs: build
+    if: ${{ always() }}
+    defaults:
+      run:
+        working-directory: ./example-app
+    steps:
     - name: Test
       run: |
         poetry run task test
