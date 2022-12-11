@@ -40,3 +40,5 @@ apps/static/assets/.temp
 
 # IDE
 .vscode/*
+
+#poetry.lock

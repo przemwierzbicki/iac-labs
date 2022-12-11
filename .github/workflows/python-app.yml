@@ -17,9 +17,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
-#    defaults:
-#      run:
-#        working-directory: ./example-app
+    defaults:
+      run:
+        working-directory: ./example-app
 
     steps:
     - uses: actions/checkout@v3
@@ -46,15 +46,10 @@ jobs:
 #        installation-arguments: # optional
     - name: Install dependencies
       run: |
-        cd ./example-app
-        pwd
-        ls -l
-        poetry install
+        poetry install --quiet
     - name: Lint
       run: |
-        cd ./example-app
         poetry run task lint
     - name: Test
       run: |
-        cd ./example-app
         poetry run task test
